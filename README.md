@@ -1,6 +1,6 @@
 # Adversarial Robustness in Graph Neural Networks: A Hamiltonian Approach
 
-This repository contains the code for our NeurIPS 2023 accepted **Spotlight** paper, *Adversarial Robustness in Graph Neural Networks: A Hamiltonian Approach*.
+This repository contains the code for our NeurIPS 2023 accepted **Spotlight** paper, *[Adversarial Robustness in Graph Neural Networks: A Hamiltonian Approach](https://arxiv.org/abs/2310.06396)*.
 
 ## Table of Contents
 
