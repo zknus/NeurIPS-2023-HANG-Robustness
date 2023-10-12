@@ -80,10 +80,7 @@ class HAMGCNFunc_QUAD(ODEFunc):
 
     self.in_features = in_features
     self.out_features = out_features
-    self.w = nn.Parameter(torch.eye(opt['hidden_dim']))
-    self.d = nn.Parameter(torch.zeros(opt['hidden_dim']) + 1)
-    self.alpha_sc = nn.Parameter(torch.ones(1))
-    self.beta_sc = nn.Parameter(torch.ones(1))
+
 
 
 
