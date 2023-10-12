@@ -50,30 +50,17 @@ class HAMGCNFunc_VAN(ODEFunc):
   # currently requires in_features = out_features
   def __init__(self, in_features, out_features, opt, device):
     super(HAMGCNFunc_VAN, self).__init__(opt, device)
-
     self.in_features = in_features
     self.out_features = out_features
-
-
-
     self.H = H_gcn(in_features ).to(device)
 
 
-
   def forward(self, t, x_full):  # the t param is needed by the ODE solver.
-
-
-
-
     f_full = batch_jacobian(lambda xx: self.H(xx, self.edge_index), x_full, create_graph=True).squeeze()
-
     dx = f_full[..., self.in_features:]
     dv = -1 * f_full[..., 0:self.in_features]
-
     if self.opt['add_source']:
       dx = (1. - torch.sigmoid(self.beta_train)) * dx + torch.sigmoid(self.beta_train) * self.x0[:, self.opt['hidden_dim']:]
-
-
     f = torch.hstack([dx, dv])
 
     return f

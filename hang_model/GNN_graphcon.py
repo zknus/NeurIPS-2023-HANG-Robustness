@@ -17,7 +17,6 @@ class GNN_graphcon(BaseGNN):
     self.bn = nn.BatchNorm1d(opt['hidden_dim'])
   def forward(self, x,adj):
     # Encode each node based on its feature.
-
     x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     x = self.m1(x)
     if self.opt['use_mlp']:
@@ -25,38 +24,22 @@ class GNN_graphcon(BaseGNN):
       x = F.dropout(x + self.m11(F.relu(x)), self.opt['dropout'], training=self.training)
       x = F.dropout(x + self.m12(F.relu(x)), self.opt['dropout'], training=self.training)
     # todo investigate if some input non-linearity solves the problem with smooth deformations identified in the ANODE paper
-
-
-
     # if self.opt['batch_norm']:
     #   x = self.bn_in(x)
-
     x = self.bn(x)
     # Solve the initial value problem of the ODE.
-
-
     if 'grand' not in self.opt['function']:
       vt = x.clone()
       x = torch.cat([x, vt], dim=-1)
-
-
     self.odeblock.set_x0(x)
-
-
     z = self.odeblock(x,adj)
-
-
     if 'grand' not in self.opt['function']:
       z = z[:, self.opt['hidden_dim']:]
-
-
     # Activation.
     z = F.relu(z)
-
     if self.opt['fc_out']:
       z = self.fc(z)
       z = F.relu(z)
-
     # Dropout.
     z = F.dropout(z, self.opt['dropout'], training=self.training)
     # print('z after dropout: ', z)
