@@ -28,8 +28,8 @@ class GNN_graphcon(BaseGNN):
 
 
 
-    if self.opt['batch_norm']:
-      x = self.bn_in(x)
+    # if self.opt['batch_norm']:
+    #   x = self.bn_in(x)
 
     x = self.bn(x)
     # Solve the initial value problem of the ODE.
