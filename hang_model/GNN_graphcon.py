@@ -17,9 +17,7 @@ class GNN_graphcon(BaseGNN):
     self.bn = nn.BatchNorm1d(opt['hidden_dim'])
   def forward(self, x,adj):
     # Encode each node based on its feature.
-    # if self.opt['use_labels']:
-    #   y = x[:, self.num_features:]
-    #   x = x[:, :self.num_features]
+
     x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     x = self.m1(x)
     if self.opt['use_mlp']:
@@ -28,20 +26,14 @@ class GNN_graphcon(BaseGNN):
       x = F.dropout(x + self.m12(F.relu(x)), self.opt['dropout'], training=self.training)
     # todo investigate if some input non-linearity solves the problem with smooth deformations identified in the ANODE paper
 
-    # if self.opt['use_labels']:
-    #   x = torch.cat([x, y], dim=-1)
+
 
     if self.opt['batch_norm']:
       x = self.bn_in(x)
 
     x = self.bn(x)
     # Solve the initial value problem of the ODE.
-    if self.opt['augment']:
-      c_aux = torch.zeros(x.shape).to(self.device)
-      x = torch.cat([x, c_aux], dim=1)
-    # if self.training:
-    #   print('x before ode: ',x.shape)
-    #   print('x before ode: ',x)
+
 
     if 'grand' not in self.opt['function']:
       vt = x.clone()
@@ -50,25 +42,17 @@ class GNN_graphcon(BaseGNN):
 
     self.odeblock.set_x0(x)
 
-    # if self.training and self.odeblock.nreg > 0:
-    #   z, self.reg_states = self.odeblock(x)
-    # else:
-    #   z = self.odeblock(x)
+
     z = self.odeblock(x,adj)
-    # print('z after ode: ', z.shape)
-    # print('z after ode: ', z)
-    if self.opt['augment']:
-      z = torch.split(z, x.shape[1] // 2, dim=1)[0]
+
 
     if 'grand' not in self.opt['function']:
       z = z[:, self.opt['hidden_dim']:]
 
-    # if self.training:
-    #   print('z after ode: ', z)
 
     # Activation.
     z = F.relu(z)
-    # z = self.prelu(z)
+
     if self.opt['fc_out']:
       z = self.fc(z)
       z = F.relu(z)
