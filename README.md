@@ -98,7 +98,7 @@ python run_metattack_rate.py --dataset pubmed --function hangquad --block consta
 
 ## Reference 
 
-Our code is developed based on the following repo:
+Our code is developed based on the following repos:
 
 The GIA attack method is based on the [GIA-HAO](https://github.com/LFhase/GIA-HAO/tree/master) repo.  
 The HANG model is based on the [GraphCON](https://github.com/tk-rusch/GraphCON) framework.  
@@ -108,11 +108,11 @@ The METATTACK and NETTACK methods are based on the [deeprobust](https://github.c
 
 ## Citation
 
-If you find our helpful, consider to cite us:
+If you find our work useful, please cite us as follows:
 ```bash
 @INPROCEEDINGS{ZhaKanSon:C23b,
 author = {Kai Zhao and Qiyu Kang and Yang Song and Rui She and Sijie Wang and Wee Peng Tay},
-title = {Adversarial Robustness in Graph Neural Networks: A {Hamiltonian} Energy Conservation Approach},
+title = {Adversarial Robustness in Graph Neural Networks: {A Hamiltonian} Energy Conservation Approach},
 booktitle = {Advances in Neural Information Processing Systems},
 volume = {},
 pages = {},
