@@ -133,7 +133,7 @@ def main(args):
     # test original data
     print("Test original data")
     _,_, test_acc_clean = test_defend(args,data)
-    modified_adj = sp.load_npz("/home/ntu/Documents/zk/graph_robust/grb-master/meta/" + attack_name)
+    modified_adj = sp.load_npz("./metattack/" + attack_name)
     modified_adj = modified_adj.todense()
     # transfer to torch
     modified_adj = torch.from_numpy(modified_adj).float().to(args.device)
@@ -294,8 +294,8 @@ if __name__ == '__main__':
             f.write("Test adv: " + str(np.mean(test_adv)) + " " + str(np.std(test_adv)) + "\n")
             f.write("\n")
     # save args
-    opt = vars(args_ori)
-    with open(filename_log, "a") as f:
-        json.dump(opt, f, indent=2)
-        f.write("\n")
+    # opt = vars(args_ori)
+    # with open(filename_log, "a") as f:
+    #     json.dump(opt, f, indent=2)
+    #     f.write("\n")
 
